@@ -118,9 +118,10 @@ for i in range(n):  # 對於每一行
 <h2>w13_hw</h2>
 <p>程式連結:</p>
 <p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/0a6ca035ee99556d7e1ecaf8e40aa9bb/raw/594cbfd0d71e05c62edb4e0c963165fbe44a91c1/w13_wh-1.py">紅色正方形</a></p>
-<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/0a6ca035ee99556d7e1ecaf8e40aa9bb/raw/1741eb15854bfb9c6264770045c7b58b8b8c7c39/w13_wh-3.py">紅色正方形重疊</a></p>
-<p><br/><br/></p>
+<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/0a6ca035ee99556d7e1ecaf8e40aa9bb/raw/1741eb15854bfb9c6264770045c7b58b8b8c7c39/w13_wh-2.py">紅色正方形重疊</a></p>
+<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/0a6ca035ee99556d7e1ecaf8e40aa9bb/raw/1741eb15854bfb9c6264770045c7b58b8b8c7c39/w13_wh-3.py">不同區塊塗色</a><br/><br/></p>
 <p>正方形頁面列印</p>
+<p><iframe allowfullscreen="allowfullscreen" height="314" src='//www.youtube.com/embed/Wk3gu_1oAJM?si=X88LQLdykl2b_M56" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen&gt;&lt;/iframe&gt;' width="560"></iframe></p>
 <p><br/><br/></p>
 <div id="brython_div1"></div>
 <!-- 導入 brython 程式庫 -->
@@ -196,6 +197,132 @@ ctx.strokeStyle = 'blue'  # 設定對角線顏色為藍色
 ctx.beginPath() 
 ctx.moveTo(10, 10)
 ctx.lineTo(210, 210)
+ctx.stroke()
+</script>
+</p>
+<!-- 啟動 Brython -->
+<p>
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+}
+</script>
+<script type="text/python3">
+from browser import html
+from browser import document as doc
+import math
+
+# 建立 canvas
+canvas = html.CANVAS(width=400, height=400)
+brython_div = doc["brython_div1"]
+brython_div <= canvas
+
+ctx = canvas.getContext("2d")
+
+# 定義矩形和圓的參數
+rect1 = {"x": 50, "y": 50, "w": 150, "h": 150}
+rect2 = {"x": 125, "y": 125, "w": 150, "h": 150}
+circle1 = {"cx": 125, "cy": 125, "r": 106.07}
+circle2 = {"cx": 200, "cy": 200, "r": 106.07}
+
+# 生成顏色函數
+def generate_unique_color(index):
+    # 增加顏色區分度，利用 HSL 色彩模式
+    hue = (index * 137.508) % 360  # 保證每次的色調都不同，使用金比例分布避免聚集
+    saturation = 70 + (index % 2) * 15  # 交替調整飽和度（70% 或 85%）
+    lightness = 50 + (index % 3) * 10  # 交替調整亮度（50%、60% 或 70%）
+    return f"hsl({hue:.2f}, {saturation}%, {lightness}%)"
+
+# 填充函數
+def fill_region(x, y, w, h, color):
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, w, h)
+
+# 判斷點是否在圓內
+def is_point_in_circle(x, y, circle):
+    return (x - circle["cx"])**2 + (y - circle["cy"])**2 <= circle["r"]**2
+
+# 判斷點是否在矩形對角線上方或下方
+def is_point_above_diagonal(x, y, rect):
+    diagonal_slope = rect["h"] / rect["w"]
+    rect_start_x, rect_start_y = rect["x"], rect["y"]
+    relative_y = y - rect_start_y
+    relative_x = x - rect_start_x
+    return relative_y > diagonal_slope * relative_x
+
+# 填充每個分割區域
+step = 1  # 定義網格精度
+region_colors = {}
+region_index = 0
+
+def is_point_in_rect(x, y, rect):
+    return rect["x"] <= x <= rect["x"] + rect["w"] and rect["y"] <= y <= rect["y"] + rect["h"]
+
+# 判斷點是否在圓內但不在矩形內
+def is_point_in_circle_not_in_rect(x, y, circle, rect):
+    return is_point_in_circle(x, y, circle) and not is_point_in_rect(x, y, rect)
+
+# 判斷點與矩形頂點的相對象限
+def get_quadrant(x, y, rect_vertex):
+    if x >= rect_vertex[0] and y <= rect_vertex[1]:
+        return 0  # 第一象限
+    elif x <= rect_vertex[0] and y <= rect_vertex[1]:
+        return 1  # 第二象限
+    elif x <= rect_vertex[0] and y >= rect_vertex[1]:
+        return 2  # 第三象限
+    elif x >= rect_vertex[0] and y >= rect_vertex[1]:
+        return 3  # 第四象限
+
+# 新增的區域填充邏輯
+for y in range(0, 400, step):
+    for x in range(0, 400, step):
+        # 判斷點是否屬於基本區域
+        in_rect1 = is_point_in_rect(x, y, rect1)
+        in_rect2 = is_point_in_rect(x, y, rect2)
+        in_circle1 = is_point_in_circle(x, y, circle1)
+        in_circle2 = is_point_in_circle(x, y, circle2)
+
+        # 判斷點是否在矩形內或在外接圓內但不在矩形內
+        in_circle1_not_in_rect1 = is_point_in_circle_not_in_rect(x, y, circle1, rect1)
+        in_circle2_not_in_rect2 = is_point_in_circle_not_in_rect(x, y, circle2, rect2)
+
+        # 增加對角線劃分判斷（僅限第一個矩形）
+        above_diagonal1 = in_rect1 and is_point_above_diagonal(x, y, rect1)
+        
+        # 不考慮第二個矩形的對角線
+        above_diagonal2 = False  # 明確禁用
+
+        # 對不在矩形內的外接圓部分進行進一步劃分
+        quadrant1 = get_quadrant(x, y, (rect1["x"], rect1["y"])) if in_circle1_not_in_rect1 else -1
+        quadrant2 = get_quadrant(x, y, (rect2["x"], rect2["y"])) if in_circle2_not_in_rect2 else -1
+
+        # 確定區域編號（包含外接圓的分象限條件）
+        region_code = (
+           (above_diagonal1 << 8) |                # 第一個矩形的對角線（僅第一個矩形適用）
+           (quadrant1 << 6 if quadrant1 != -1 else 0) |  # 第一個圓的象限
+           (quadrant2 << 4 if quadrant2 != -1 else 0) |  # 第二個圓的象限
+           (in_circle1_not_in_rect1 << 3) |       # 第一個圓但不在第一個矩形內
+           (in_circle2_not_in_rect2 << 2) |       # 第二個圓但不在第二個矩形內
+           (in_rect1 << 1) |                      # 第一個矩形
+           in_rect2                               # 第二個矩形
+       )
+
+
+        # 如果區域尚未分配顏色，為其生成一個新顏色
+        if region_code not in region_colors:
+            region_colors[region_code] = generate_unique_color(region_index)
+            region_index += 1
+
+        # 填充區域
+        if region_code != 0:  # 跳過背景
+            fill_region(x, y, step, step, region_colors[region_code])
+
+# 繪製矩形的對角線
+ctx.strokeStyle = "blue"
+ctx.lineWidth = 2
+ctx.beginPath()
+ctx.moveTo(rect1["x"], rect1["y"])
+ctx.lineTo(rect1["x"] + rect1["w"], rect1["y"] + rect1["h"])
 ctx.stroke()
 </script>
 </p><h1>HW 2</h1>
