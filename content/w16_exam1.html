@@ -143,7 +143,112 @@ img.add_border {
         </header>
     <div id="tipue_search_content">HW 2 Exam << <a href='HW 2 Exam.html'>Previous</a> <a href='HW 3.html'>Next</a> >> HW 3<br /><h1>w16_exam1</h1>
 <p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/bb3bae1145b6d4a39745ae011ca3b3067a59bbc5/draw.py">exam_16_1</a></p>
-<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/07dafe890378c299e00a48f3df35a38dbcb59b18/draw2.py"></a></p><br />HW 2 Exam << <a href='HW 2 Exam.html'>Previous</a> <a href='HW 3.html'>Next</a> >> HW 3</div>
+<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/07dafe890378c299e00a48f3df35a38dbcb59b18/draw2.py"></a></p>
+<!-- 導入 brython 程式庫 -->
+<p>
+<script src="./../cmsimde/static/brython.js"></script>
+<script src="./../cmsimde/static/brython_stdlib.js"></script>
+</p>
+<!-- 啟動 Brython -->
+<p>
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+}
+</script>
+<script type="text/python3">
+import math
+from browser import html
+from browser import document as doc
+
+# 利用 html 建立 canvas 超文件物件
+canvas = html.CANVAS(width=500, height=400)
+brython_div = doc["brython_div1"]
+brython_div <= canvas
+
+# 設定畫布
+ctx = canvas.getContext("2d")
+
+# 設定原點座標
+origin_x, origin_y = 12, 3
+pixel = 2  # 調整比例大小
+
+# 繪製 X 軸
+ctx.beginPath()
+ctx.moveTo(origin_x, origin_y)
+ctx.lineTo(canvas.width, origin_y)
+ctx.strokeStyle = "black"
+ctx.lineWidth = pixel
+ctx.stroke()
+
+# 繪製 Y 軸
+ctx.beginPath()
+ctx.moveTo(origin_x, origin_y)
+ctx.lineTo(origin_x, canvas.height)
+ctx.strokeStyle = "black"
+ctx.lineWidth = pixel
+ctx.stroke()
+
+# 標示原點座標
+ctx.font = "12px Arial"
+ctx.fillStyle = "black"
+ctx.fillText(f"({origin_x}, {origin_y})", origin_x + 3, origin_y + 15)
+
+# 位移偏移量，使圖形與參考圖片一致
+offset_x = 31
+offset_y = 53
+
+# 繪製橙色六邊形
+ctx.beginPath()
+ctx.fillStyle = "#F47920"
+ctx.moveTo(offset_x + 30, offset_y + 40)
+ctx.lineTo(offset_x + 50, offset_y + 20)
+ctx.lineTo(offset_x + 80, offset_y + 20)
+ctx.lineTo(offset_x + 100, offset_y + 40)
+ctx.lineTo(offset_x + 80, offset_y + 60)
+ctx.lineTo(offset_x + 50, offset_y + 60)
+ctx.closePath()
+ctx.fill()
+
+# 繪製綠色菱形
+ctx.beginPath()
+ctx.fillStyle = "#009F95"
+ctx.moveTo(offset_x + 110, offset_y + 40)
+ctx.lineTo(offset_x + 130, offset_y + 20)
+ctx.lineTo(offset_x + 150, offset_y + 40)
+ctx.lineTo(offset_x + 130, offset_y + 60)
+ctx.closePath()
+ctx.fill()
+
+# 繪製藍色三角形
+ctx.beginPath()
+ctx.fillStyle = "#40B4CB"
+ctx.moveTo(offset_x + 160, offset_y + 40)
+ctx.lineTo(offset_x + 140, offset_y + 60)
+ctx.lineTo(offset_x + 180, offset_y + 60)
+ctx.closePath()
+ctx.fill()
+
+# 繪製粉紅色圓形
+ctx.beginPath()
+ctx.fillStyle = "#EB008B"
+ctx.arc(offset_x + 200, offset_y + 40, 12, 0, 2 * math.pi)
+ctx.fill()
+
+# 繪製黃色正方形
+ctx.beginPath()
+ctx.fillStyle = "#FDD56A"
+ctx.rect(offset_x + 230, offset_y + 20, 25, 25)
+ctx.fill()
+
+# 繪製藍色長方形
+ctx.beginPath()
+ctx.fillStyle = "#003A70"
+ctx.rect(offset_x + 270, offset_y + 30, 40, 15)
+ctx.fill()
+</script>
+</p>
+<div id="brython_div1"></div><br />HW 2 Exam << <a href='HW 2 Exam.html'>Previous</a> <a href='HW 3.html'>Next</a> >> HW 3</div>
         
     <!-- footer -->
       <div class="container">
