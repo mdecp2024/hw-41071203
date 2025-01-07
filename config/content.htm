@@ -381,7 +381,112 @@ ctx.stroke()
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 HW 2 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>
 <h3>w16_exam1</h3>
 <p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/bb3bae1145b6d4a39745ae011ca3b3067a59bbc5/draw.py">exam_16_1</a></p>
-<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/07dafe890378c299e00a48f3df35a38dbcb59b18/draw2.py"></a></p><h1>HW 3</h1>
+<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/07dafe890378c299e00a48f3df35a38dbcb59b18/draw2.py"></a></p>
+<!-- 導入 brython 程式庫 -->
+<p>
+<script src="/static/brython.js"></script>
+<script src="/static/brython_stdlib.js"></script>
+</p>
+<!-- 啟動 Brython -->
+<p>
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+}
+</script>
+<script type="text/python3">
+import math
+from browser import html
+from browser import document as doc
+
+# 利用 html 建立 canvas 超文件物件
+canvas = html.CANVAS(width=500, height=400)
+brython_div = doc["brython_div1"]
+brython_div <= canvas
+
+# 設定畫布
+ctx = canvas.getContext("2d")
+
+# 設定原點座標
+origin_x, origin_y = 12, 3
+pixel = 2  # 調整比例大小
+
+# 繪製 X 軸
+ctx.beginPath()
+ctx.moveTo(origin_x, origin_y)
+ctx.lineTo(canvas.width, origin_y)
+ctx.strokeStyle = "black"
+ctx.lineWidth = pixel
+ctx.stroke()
+
+# 繪製 Y 軸
+ctx.beginPath()
+ctx.moveTo(origin_x, origin_y)
+ctx.lineTo(origin_x, canvas.height)
+ctx.strokeStyle = "black"
+ctx.lineWidth = pixel
+ctx.stroke()
+
+# 標示原點座標
+ctx.font = "12px Arial"
+ctx.fillStyle = "black"
+ctx.fillText(f"({origin_x}, {origin_y})", origin_x + 3, origin_y + 15)
+
+# 位移偏移量，使圖形與參考圖片一致
+offset_x = 31
+offset_y = 53
+
+# 繪製橙色六邊形
+ctx.beginPath()
+ctx.fillStyle = "#F47920"
+ctx.moveTo(offset_x + 30, offset_y + 40)
+ctx.lineTo(offset_x + 50, offset_y + 20)
+ctx.lineTo(offset_x + 80, offset_y + 20)
+ctx.lineTo(offset_x + 100, offset_y + 40)
+ctx.lineTo(offset_x + 80, offset_y + 60)
+ctx.lineTo(offset_x + 50, offset_y + 60)
+ctx.closePath()
+ctx.fill()
+
+# 繪製綠色菱形
+ctx.beginPath()
+ctx.fillStyle = "#009F95"
+ctx.moveTo(offset_x + 110, offset_y + 40)
+ctx.lineTo(offset_x + 130, offset_y + 20)
+ctx.lineTo(offset_x + 150, offset_y + 40)
+ctx.lineTo(offset_x + 130, offset_y + 60)
+ctx.closePath()
+ctx.fill()
+
+# 繪製藍色三角形
+ctx.beginPath()
+ctx.fillStyle = "#40B4CB"
+ctx.moveTo(offset_x + 160, offset_y + 40)
+ctx.lineTo(offset_x + 140, offset_y + 60)
+ctx.lineTo(offset_x + 180, offset_y + 60)
+ctx.closePath()
+ctx.fill()
+
+# 繪製粉紅色圓形
+ctx.beginPath()
+ctx.fillStyle = "#EB008B"
+ctx.arc(offset_x + 200, offset_y + 40, 12, 0, 2 * math.pi)
+ctx.fill()
+
+# 繪製黃色正方形
+ctx.beginPath()
+ctx.fillStyle = "#FDD56A"
+ctx.rect(offset_x + 230, offset_y + 20, 25, 25)
+ctx.fill()
+
+# 繪製藍色長方形
+ctx.beginPath()
+ctx.fillStyle = "#003A70"
+ctx.rect(offset_x + 270, offset_y + 30, 40, 15)
+ctx.fill()
+</script>
+</p>
+<div id="brython_div1"></div><h1>HW 3</h1>
 <h4>主題: Python 的數字、演算法與迴圈 (20%)</h4>
 <p style="padding-left: 30px;">Python 課程教材: <a href="https://www.learnpythonwithjupyter.com/">https://www.learnpythonwithjupyter.com/</a> - PART 4 and Part 5</p>
 <p>完成上述流程整理後, 請將 HW3 自評分數輸入 cp2024 自評表單中.</p>
@@ -390,7 +495,73 @@ ctx.stroke()
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 HW 3 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>
 <p></p>
 <h3>w16_exam2</h3>
-<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/07dafe890378c299e00a48f3df35a38dbcb59b18/draw2.py">exam_16_2</a></p><h3>W5</h3>
+<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/07dafe890378c299e00a48f3df35a38dbcb59b18/draw2.py">exam_16_2</a></p>
+<!-- 導入 brython 程式庫 -->
+<p>
+<script src="/static/brython.js"></script>
+<script src="/static/brython_stdlib.js"></script>
+</p>
+<!-- 啟動 Brython -->
+<p>
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+}
+</script>
+<script type="text/python3">
+from browser import html
+from browser import document as doc
+
+# 建立畫布
+canvas = html.CANVAS(width=300, height=300)  # 設定迷宮畫布大小
+brython_div = doc["brython_div1"]
+brython_div <= canvas
+
+# 取得畫布的繪圖上下文
+ctx = canvas.getContext("2d")
+
+# 標示左上方點座標 (12, 3)
+ctx.font = "12px Arial"
+ctx.fillStyle = "red"
+ctx.fillText("(12, 3)", 16, 15)
+
+# 定義藍色線條的屬性
+ctx.strokeStyle = "blue"
+ctx.lineWidth = 2
+
+# 起點 (12, 3)
+offset_x = 12
+offset_y = 3
+
+# 定義所有線條的起點和終點
+lines = [
+    [(0, 0), (86, 0)],   # 上邊
+    [(0, 0), (0, 200)],  # 左邊
+    [(120, 0), (200, 0)], # 右上
+    [(200, 0), (200, 200)], # 右邊
+    [(200, 200), (120, 200)], # 右下
+    [(0, 200), (86, 200)], # 左下
+    [(86, 157), (86, 200)], # 垂直連接
+    [(86, 157), (126, 157)], # 水平連接
+    [(160, 120), (160, 200)], # 右中
+    [(160, 120), (50, 120)], # 左中
+    [(50, 120), (50, 163)], # 左中垂直
+    [(126, 80), (126, 120)], # 中間垂直
+    [(0, 80), (86, 80)],  # 左上水平
+    [(86, 40), (86, 80)], # 左上垂直
+    [(40, 40), (160, 40)], # 上中水平
+    [(160, 40), (160, 83)], # 上右垂直
+]
+
+# 繪製所有線條
+ctx.beginPath()
+for start, end in lines:
+    ctx.moveTo(offset_x + start[0], offset_y + start[1])
+    ctx.lineTo(offset_x + end[0], offset_y + end[1])
+ctx.stroke()
+</script>
+</p>
+<div id="brython_div1"></div><h3>W5</h3>
 <pre class="brush:html;auto-links:false;toolbar:false" contenteditable="false">#單行註解
 #help(print)
 '''這個三引號所界定的區域
@@ -444,7 +615,91 @@ for i in range(1,b,2):
 <p>透過 Jupyterlab 協同網頁, 輪流指定各組編寫 HW 4 相關的程式練習, 以及網頁內容 (localhost 與 Codespaces 環境)編輯.</p>
 <p></p>
 <h3>w16_exam3</h3>
-<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/5aa7b787da94aa0012d9e639490b30eeba99d799/draw3.py">exam_16_3</a></p><h1>Final Report</h1>
+<p><a href="https://mdecp2024.github.io/hw-41071203/content/Brython?src=https://gist.githubusercontent.com/41071203/14ec49dc8f5d4a03f1f5c4ff37bc363e/raw/f53afbb623069731e7e04851ce7de6b976a44de4/draw3.py">exam_16_3</a></p>
+<!-- 導入 brython 程式庫 -->
+<p>
+<script src="/static/brython.js"></script>
+<script src="/static/brython_stdlib.js"></script>
+</p>
+<!-- 啟動 Brython -->
+<p>
+<script>
+window.onload=function(){
+brython({debug:1, pythonpath:['./../cmsimde/static/','./../downloads/py/']});
+}
+</script>
+<script type="text/python3">
+from browser import html
+from browser import document as doc
+
+# 建立畫布
+canvas = html.CANVAS(width=300, height=300)  # 設定迷宮畫布大小
+brython_div = doc["brython_div1"]
+brython_div <= canvas
+
+# 取得畫布的繪圖上下文
+ctx = canvas.getContext("2d")
+
+# 標示左上方點座標 (12, 3)
+ctx.font = "12px Arial"
+ctx.fillStyle = "red"
+ctx.fillText("(12, 3)", 16, 15)
+
+# 定義藍色線條的屬性
+ctx.strokeStyle = "black"
+ctx.lineWidth = 2
+
+# 起點 (12, 3)
+offset_x = 12
+offset_y = 3
+
+# 定義所有線條的起點和終點
+lines = [
+    [(0, 0), (86, 0)],   # 上邊
+    [(0, 0), (0, 200)],  # 左邊
+    [(120, 0), (200, 0)], # 右上
+    [(200, 0), (200, 200)], # 右邊
+    [(200, 200), (120, 200)], # 右下
+    [(0, 200), (86, 200)], # 左下
+    [(86, 157), (86, 200)], # 垂直連接
+    [(86, 157), (126, 157)], # 水平連接
+    [(160, 120), (160, 200)], # 右中
+    [(160, 120), (50, 120)], # 左中
+    [(50, 120), (50, 163)], # 左中垂直
+    [(126, 80), (126, 120)], # 中間垂直
+    [(0, 80), (86, 80)],  # 左上水平
+    [(86, 40), (86, 80)], # 左上垂直
+    [(40, 40), (160, 40)], # 上中水平
+    [(160, 40), (160, 83)], # 上右垂直
+]
+
+# 繪製所有線條
+ctx.beginPath()
+for start, end in lines:
+    ctx.moveTo(offset_x + start[0], offset_y + start[1])
+    ctx.lineTo(offset_x + end[0], offset_y + end[1])
+ctx.stroke()
+
+# 定義紅色線條的屬性
+ctx.strokeStyle = "red"
+ctx.lineWidth = 2
+
+# 定義紅色路線的點
+path = [
+    (90, 0), (90, 25), (195, 25), (195, 90), (150, 90),
+    (150, 70), (120, 70), (120, 90), (30, 90), (30, 180),
+    (65, 180), (65, 150), (150, 150), (150, 170),(110, 170), (110, 220)
+]
+
+# 繪製紅色路線
+ctx.beginPath()
+ctx.moveTo(offset_x + path[0][0], offset_y + path[0][1])
+for point in path[1:]:
+    ctx.lineTo(offset_x + point[0], offset_y + point[1])
+ctx.stroke()
+</script>
+</p>
+<div id="brython_div1"></div><h1>Final Report</h1>
 <p>期末口頭與書面專題報告 (20%)</p>
 <p>期末口頭專題報告影片:</p>
 <p style="padding-left: 30px;">......</p>
